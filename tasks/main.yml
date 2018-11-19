@@ -1,0 +1,18 @@
+---
+- name: Install dependencies
+  become: True
+  apt:
+    name: openjdk-8-jre-headless
+    state: present
+
+- name: Download the Unifi SDN Controller software
+  get_url:
+    checksum: sha256:2a86a731f2261d84db5d41f87a5a60e6f2e34c2d5c6d34d0e12cab9f5b3e6b44
+    url: https://dl.ubnt.com/unifi/5.6.40/unifi_sysvinit_all.deb
+    dest: /tmp/unifi_sysvinit_all.deb
+
+- name: Install the Unifi SDN Controller software
+  become: True
+  apt:
+    deb: /tmp/unifi_sysvinit_all.deb
+    state: present
